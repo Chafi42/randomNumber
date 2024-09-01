@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = 'votre_cle_secrete'
 csrf = CSRFProtect(app)
 
 # Générer un nombre entier aléatoire entre 1 et 100
-nombre_aleatoire = random.randint(1, 100)
+nombre_aleatoire = random.randint(1, 2)
 
 class GuessForm(FlaskForm):
     guess = StringField('guess', validators=[DataRequired()])

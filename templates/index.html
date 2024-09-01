@@ -2,21 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Random Number Guessing Game</title>
+    <title>Au pif !</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex items-center justify-center min-h-screen bg-black">
     <div class="bg-white p-8 rounded shadow-md text-center">
-        <h1 class="text-2xl font-bold mb-4">Random Number Guessing Game</h1>
-        <p class="mb-4">Devinez le nombre entre 1 et 100 :</p>
+        <h1 class="text-2xl font-bold mb-4">On pari ?</h1>
+        <p class="mb-4">Devine le nombre (1 ou 2) :</p>
+      
         <form method="POST" action="/deviner">
             {{ form.hidden_tag() }}
             <input type="text" name="guess" id="guess" placeholder="Entrez votre supposition" class="border p-2 rounded mb-4 w-full">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Soumettre</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Devinez !</button>
         </form>
         <p id="message" class="mt-4"></p>
     </div>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var guess = document.getElementById('guess').value;
+            var csrf_token = document.querySelector('input[name="csrf_token"]').value;
+            fetch('/deviner', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'guess=' + guess + '&csrf_token=' + csrf_token
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message').innerText = data.message;
+            });
+        });
+    </script>
+</body>
+</html>
 
+
+
+
+
+    
     <script>
         document.querySelector('form').addEventListener('submit', function(event) {
             event.preventDefault();
